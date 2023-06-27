@@ -1,0 +1,20 @@
+{
+  "name": "finaseed-assessment",
+  "version": "1.0.0",
+  "description": "api for user authentication and CRUD operations",
+  "main": "server.js",
+  "scripts": {
+    "test": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mr-Styler/FinaSeed-Assessment.git"
+  },
+  "author": "Mr-Styler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mr-Styler/FinaSeed-Assessment/issues"
+  },
+  "homepage": "https://github.com/Mr-Styler/FinaSeed-Assessment#readme"
+}
