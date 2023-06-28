@@ -6,7 +6,9 @@ const authController = require('../controllers/authController');
 router.post('/register', authController.register);
 router.post('/login', authController.login);
 
-// User routes
+// Routes that can only be accessed when logged in
+router.use(authController.isAuthenticated);
+
 router.get('/', userController.getAllUsers);
 router.route('/:id').get(userController.getUser).patch(userController.updateUser).delete(userController.deleteUser);
 

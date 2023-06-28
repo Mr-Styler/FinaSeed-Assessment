@@ -1,12 +1,19 @@
 const express = require('express');
 const app = express();
 
+const userRoute = require('./routes/userRoute');
 const errorController = require('./controllers/errorController');
+const AppError = require('./utils/appError');
 
 // Allows data transfer in json format
-app.use(express.json);
+app.use(express.json());
 
-const userRoute = require('./routes/userRoute');
+app.use(express.static(`${__dirname}/public`));
+
+app.use((req, res, next) => {
+    console.log('request received!!!!');
+    next()
+})
 
 app.use('/api/users', userRoute);
 

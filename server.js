@@ -6,4 +6,4 @@ const server = require('./app');
 mongoose.connect(process.env.DB_URI).then(() => console.log('DB connection was successful.')).catch(err => console.log(`Error, Couldn't connect to the database`));
 
 // Starts the web server
-server.listen(1500, () => console.log(`Server is live and running`));
+server.listen(1515, () => console.log(`Server is live and running`));
