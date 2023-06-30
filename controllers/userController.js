@@ -2,6 +2,7 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const User = require('./../models/userModel');
 
+// Reads all user from the database
 exports.getAllUsers = catchAsync(async (req, res, next) => {
     const users = await User.find();
 
@@ -14,6 +15,7 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
     })
 });
 
+// Reads Onky one user from database
 exports.getUser = catchAsync(async (req, res, next) => {
     const user = await User.findById(req.params.id);
 
@@ -29,13 +31,14 @@ exports.getUser = catchAsync(async (req, res, next) => {
     })
 });
 
+// Updates one user in the Database
 exports.updateUser = catchAsync(async (req, res, next) => {
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
         runValidators: false
     });
 
-    if (!user) {
+    if (!updatedUser) {
         return next(new AppError('No user found with this Id.'))
     }
 
@@ -47,6 +50,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     })
 });
 
+// Deletes a user from the database
 exports.deleteUser = catchAsync(async (req, res, next) => {
     const user = await User.findByIdAndDelete(req.params.id);
 

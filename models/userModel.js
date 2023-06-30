@@ -1,5 +1,7 @@
+const crypto = require('crypto');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const validator = require('validator')
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -9,16 +11,20 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        trim: true,
         unique: true,
+        trim: true,
         lowercase: true,
-        required: [true, `user must provide a valid email address`]
+        required: [true, `user must provide an email address`],
+        validate: [validator.isEmail, 'Please provide a valid email']
     },
     password: {
         type: String,
         select: false,
         required: [true, `user must have a password`]
-    }
+    },
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date
 });
 
 userSchema.pre('save', async function (next) {
@@ -31,6 +37,17 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.correctPwd = async function (candidatePassword, userPassword) {
     return await bcrypt.compare(candidatePassword, userPassword);
 };
+
+// // checks if password was changed while being logged in
+// userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
+//     if (this.passwordChangedAt) {
+//         const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
+
+//         return JWTTimestamp < changedTimestamp;
+//     }
+    
+//     return false;
+// }
 
 // creates a reset token for forgotten password
 userSchema.methods.createPasswordResetToken = function () {

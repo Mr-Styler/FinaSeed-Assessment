@@ -4,14 +4,16 @@ const app = express();
 const userRoute = require('./routes/userRoute');
 const errorController = require('./controllers/errorController');
 const AppError = require('./utils/appError');
+const cookieParser = require('cookie-parser')
 
 // Allows data transfer in json format
 app.use(express.json());
+app.use(cookieParser());
 
 app.use(express.static(`${__dirname}/public`));
 
 app.use((req, res, next) => {
-    console.log('request received!!!!');
+    console.log('new request received!!!!');
     next()
 })
 
