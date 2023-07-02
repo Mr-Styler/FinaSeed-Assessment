@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
         select: false,
         required: [true, `user must have a password`]
     },
-    passwordChangedAt: Date,
+    // passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date
 });

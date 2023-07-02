@@ -8,12 +8,22 @@ const cookieParser = require('cookie-parser')
 
 // Allows data transfer in json format
 app.use(express.json());
+
+// Data sanitization against NoSQL query injection
+app.use(mongoSanitze());
+
+// Data santization against XSS
+app.use(xss());
+
+// allows server to be able to read client's cookies
 app.use(cookieParser());
 
+// serving static files
 app.use(express.static(`${__dirname}/public`));
 
+// Test middleware
 app.use((req, res, next) => {
-    console.log('new request received!!!!');
+    console.log('new request received at', req.originalUrl);
     next()
 })
 

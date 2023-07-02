@@ -11,6 +11,7 @@ const signToken = id => {
     })
 }
 
+
 const createSendToken = (user, statusCode, res) => {
     const token = signToken(user._id);
     const cookieOptions = {
@@ -29,6 +30,14 @@ const createSendToken = (user, statusCode, res) => {
             user
         }
     })
+}
+
+exports.passwordCheck = (req, res, next) => {
+    const { password, confirmPassword} = req.body;
+    if (password !== confirmPassword) {
+        return next(new AppError(`password and confirmPassword do not match`, 400))
+    }
+    next()
 }
 
 
@@ -125,7 +134,6 @@ exports.resetPwd = catchAsync(async (req, res, next) => {
         return next(new AppError(`Token is invalid or has expired.`, 400))
     }
     user.password = req.body.password;
-    user.confirmPassword = req.body.confirmPassword;
     user.passwordResetToken = undefined, user.passwordResetExpires = undefined;
     await user.save();
 

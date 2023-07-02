@@ -3,10 +3,10 @@ const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 
 // Authentication routes
-router.post('/register', authController.register);
+router.post('/new', authController.passwordCheck, authController.register);
 router.post('/login', authController.login);
 router.post('/forgot', authController.forgotPwd);
-router.patch('/reset/:token', authController.resetPwd);
+router.patch('/reset/:token', authController.passwordCheck, authController.resetPwd);
 
 // Routes that can only be accessed when logged in
 router.use(authController.isAuthenticated);
